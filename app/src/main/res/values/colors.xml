@@ -11,4 +11,9 @@
     <color name="materialOrange">#E67E22</color>
     <color name="materialYellow">#F1C40F</color>
 
+
+    <color name="colorWhite">#ffffff</color>
+    <color name="ba">#253A4B</color>
+    <color name="ab">#F23B5F</color>
+
 </resources>

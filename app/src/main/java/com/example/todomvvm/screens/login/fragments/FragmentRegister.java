@@ -22,6 +22,7 @@ public class FragmentRegister extends Fragment {
     Button button_Register;
     EditText editFirstName, editLastName, editEmail, editPassword;
     LoginRegisterViewModel loginRegisterViewModel;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     @Nullable
     @Override
@@ -41,19 +42,45 @@ public class FragmentRegister extends Fragment {
         button_Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean checkRegister =
-                        loginRegisterViewModel.registerUser(editEmail.getText().toString(), editFirstName.getText().toString(),
-                                editLastName.getText().toString(), editPassword.getText().toString());
-                if (checkRegister) {
+
+                boolean checkRegister = loginRegisterViewModel.registerUser(editEmail.getText().toString()
+                        , editFirstName.getText().toString(),
+                        editLastName.getText().toString(), editPassword.getText().toString());
+                if (editFirstName.getText().toString().equals("")) {
+                    editFirstName.setError("Enter your first name");
+                }
+                else if (editLastName.getText().toString().equals(""))
+                {
+                    editLastName.setError("Enter your last name");
+                }
+
+                else if(editEmail.getText().toString().isEmpty()) {
+                    editEmail.setError("Enter email address");
+                }else {
+                    if (editEmail.getText().toString().trim().matches(emailPattern)) {
+                        editEmail.setError("Valid email address");
+                    } else {
+                        editEmail.setError("Invalid email address");
+                    }
+                }
+
+                if(editPassword.getText().toString().equals("")){
+                    editPassword.setError("Enter valid password");
+                }
+
+
+                else if (checkRegister) {
                     Intent intent = new Intent(getContext(), SplashActivity.class);
                     startActivity(intent);
                     getActivity().finish();
-                } else {
+                }
+                else {
                     Toast.makeText(getContext(),
                             "User Already Exists",
                             Toast.LENGTH_SHORT).show();
                 }
             }
+
         });
     }
 }
