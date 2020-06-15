@@ -1,6 +1,8 @@
 package com.example.todomvvm.screens.tasks;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,12 +16,15 @@ import com.example.todomvvm.screens.addedittask.AddEditTaskActivity;
 import com.example.todomvvm.screens.login.viewmodel.LogoutViewModel;
 import com.example.todomvvm.screens.splash.SplashActivity;
 import com.example.todomvvm.screens.tasks.adapter.TaskAdapter;
+import com.example.todomvvm.screens.tasks.viewmodel.DeleteAllTasksViewModel;
 import com.example.todomvvm.screens.tasks.viewmodel.MainActivityViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -38,6 +43,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.I
     private RecyclerView mRecyclerView;
     private TaskAdapter mAdapter;
     LogoutViewModel logoutViewModel;
+    DeleteAllTasksViewModel deleteAllTasksViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +52,9 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.I
 
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         logoutViewModel = ViewModelProviders.of(this).get(LogoutViewModel.class);
+        deleteAllTasksViewModel= ViewModelProviders.of(this).get(DeleteAllTasksViewModel.class);
         // Set the RecyclerView to its corresponding view
+
         mRecyclerView = findViewById(R.id.recyclerViewTasks);
 
         // Set the layout for the RecyclerView to be a linear layout, which measures and
@@ -76,9 +84,27 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.I
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 // Here is where you'll implement swipe to delete
 
-                int position = viewHolder.getAdapterPosition();
-                List<TaskEntry> todoList = mAdapter.getTasks();
+                final int position = viewHolder.getAdapterPosition();
+                final List<TaskEntry> todoList = mAdapter.getTasks();
+                final TaskEntry deletedTask= todoList.get(position);
                 viewModel.deleteTask(todoList.get(position));
+                todoList.remove(position);
+                mAdapter.setTasks(todoList);
+                mAdapter.notifyDataSetChanged();
+                Snackbar snackbar = Snackbar
+                        .make(mRecyclerView, "Item was removed from the list.", Snackbar.LENGTH_LONG);
+                snackbar.setAction("Undo", new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+                        todoList.add(position,deletedTask);
+                        mAdapter.setTasks(todoList);
+                        mAdapter.notifyDataSetChanged();
+                        viewModel.addTask(todoList.get(position));
+
+                    }
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
             }
         }).attachToRecyclerView(mRecyclerView);
 
@@ -121,6 +147,8 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.I
                 Intent intent = new Intent(this, SplashActivity.class);
                 startActivity(intent);
                 finish();
+            case R.id.deleteAllOption:
+                handleOpenAlertDialogue();
 
 
         }
@@ -133,5 +161,29 @@ public class TaskListActivity extends AppCompatActivity implements TaskAdapter.I
         Intent intent = new Intent(TaskListActivity.this, AddEditTaskActivity.class);
         intent.putExtra(AddEditTaskActivity.EXTRA_TASK_ID, itemId);
         startActivity(intent);
+    }
+    public void handleOpenAlertDialogue(){
+        AlertDialog alertDialog= new AlertDialog.Builder(this)
+                .setTitle("Confirmation")
+                .setMessage("Are you sure you want to delete all the tasks?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        RecyclerView.ViewHolder viewHolder;
+                        final List<TaskEntry> todoList = mAdapter.getTasks();
+                        deleteAllTasksViewModel.deleteAllTasks();
+                        todoList.clear();
+                        mAdapter.setTasks(todoList);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

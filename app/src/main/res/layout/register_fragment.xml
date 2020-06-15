@@ -16,20 +16,27 @@
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43">
 
 
         <EditText
             android:id="@+id/editFirstName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+
+            android:background="@drawable/roundededit"
             android:ems="10"
+              
             android:hint="First Name"
             android:inputType="textPersonName"
-            android:paddingTop="20dp"
+            android:paddingLeft="10dp"
+
             android:textColor="#F3ECEC"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="131dp" />
@@ -38,12 +45,17 @@
         <EditText
             android:id="@+id/editLastName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/roundededit"
             android:ems="10"
+
+
             android:hint="Last Name"
             android:inputType="textPersonName"
+            android:paddingLeft="10dp"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="131dp" />
@@ -51,12 +63,16 @@
         <EditText
             android:id="@+id/editEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+
+            android:background="@drawable/roundededit"
             android:ems="10"
             android:hint="Email"
             android:inputType="textPersonName"
+            android:paddingLeft="10dp"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="70dp" />
@@ -64,27 +80,19 @@
         <EditText
             android:id="@+id/editPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+
+            android:background="@drawable/roundededit"
             android:ems="10"
             android:hint="Password"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
             android:textColor="#FFFFFF"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="131dp" />
-
-
-        <Button
-            android:id="@+id/button_Register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@color/ba"
-            android:text="Register"
-            android:textColor="@color/design_default_color_surface"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="202dp" />
 
 
     </LinearLayout>
@@ -96,7 +104,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/bungee"
         android:gravity="center"
-        android:text="EverDo"
+        android:text="TODO!"
         android:textColor="#EDE0E0"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
@@ -104,6 +112,20 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.445" />
+        app:layout_constraintVertical_bias="0.678" />
+
+    <Button
+        android:id="@+id/button_Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button2"
+        android:text="Register"
+        android:textColor="@color/design_default_color_surface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.324" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

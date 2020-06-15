@@ -8,6 +8,7 @@
     android:paddingTop="8dp"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="8dp"
+
     tools:context="com.example.android.todolist.MainActivity">
 
     <LinearLayout
@@ -61,10 +62,11 @@
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+
         android:background="@drawable/priority_circle"
         android:gravity="center"
         android:textAlignment="center"
-        android:textColor="@android:color/secondary_text_dark"
+        android:textColor="#fff"
         tools:text="1" />
 
 </LinearLayout>

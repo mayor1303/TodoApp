@@ -34,4 +34,8 @@ public class MainActivityViewModel extends AndroidViewModel {
         taskRepository.deleteTask(task);
     }
 
+    public void addTask(TaskEntry task){
+        taskRepository.insertTask(task);
+    }
+
 }

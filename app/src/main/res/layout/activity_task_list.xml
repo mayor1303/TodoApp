@@ -3,6 +3,7 @@
     and a floating action button that launches another activity.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg">
@@ -13,8 +14,9 @@
         android:layout_width="match_parent"
 
         android:layout_height="match_parent"
-        android:clipToPadding="false"
+        android:background="#FFFFFF"
 
+        android:clipToPadding="false"
         android:paddingBottom="80dp" />
 
     <!-- Floating action button that launches AddTaskActivity when clicked -->
@@ -25,6 +27,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add"
-        android:tint="@android:color/white" />
+
+        android:tint="@android:color/white"
+        app:rippleColor="@color/ba" />
 
 </FrameLayout>

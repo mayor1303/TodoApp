@@ -3,6 +3,7 @@ package com.example.todomvvm.screens.login.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class FragmentLogin extends Fragment {
     EditText editEmail, editPassword;
     CallbackFragment callbackFragment;
     LoginRegisterViewModel loginRegisterViewModel;
+    boolean isEmailValid, isPasswordValid;
 
 
     @Nullable
@@ -45,18 +47,10 @@ public class FragmentLogin extends Fragment {
         button_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                validation();
 
-                if (editEmail.getText().toString().equals(""))
-                {
-                    editEmail.setError("Please enter your email address");
-                }
-
-                else if(editPassword.getText().toString().equals("")){
-                    editPassword.setError("Enter valid password");
-                }
-                if(!TextUtils.isEmpty(editEmail.getText()) && !TextUtils.isEmpty(editPassword.getText())) {
+                if(!TextUtils.isEmpty(editEmail.getText()) && isEmailValid && !TextUtils.isEmpty(editPassword.getText())) {
                     boolean checkLogin = loginRegisterViewModel.loginUser(editEmail.getText().toString(), editPassword.getText().toString());
-
                     if (checkLogin) {
                         Intent intent = new Intent(getContext(), TaskListActivity.class);
                         startActivity(intent);
@@ -68,7 +62,7 @@ public class FragmentLogin extends Fragment {
                     }
                 }else{
                     Toast.makeText(getContext(),
-                            "Please fill in LogIn Credentials",
+                            "Please fill in Login Credentials",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -83,6 +77,29 @@ public class FragmentLogin extends Fragment {
                 }
             }
         });
+    }
+
+    public void validation(){
+        if (editEmail.getText().toString().isEmpty()) {
+            editEmail.setError(getResources().getString(R.string.email_error));
+            isEmailValid = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()) {
+            editEmail.setError(getResources().getString(R.string.error_invalid_email));
+            isEmailValid = false;
+        } else {
+            isEmailValid = true;
+        }
+
+        if (editPassword.getText().toString().isEmpty()) {
+            editPassword.setError(getResources().getString(R.string.password_error));
+            isPasswordValid = false;
+        } else if (editPassword.getText().length() < 6) {
+            editPassword.setError(getResources().getString(R.string.error_invalid_password));
+            isPasswordValid = false;
+        } else  {
+            isPasswordValid = true;
+        }
+
     }
 
     public void setCallbackFragment(CallbackFragment callbackFragment) {
